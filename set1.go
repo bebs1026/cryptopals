@@ -23,12 +23,13 @@ func main() {
 		testArray := make([]byte, len(inputByteArray))
 		copy(testArray, inputByteArray)
 		testArray[0] = testArray[0] ^ byte(i);
-		testString := string(testArray)
-		fmt.Println(testString)
+		encString := hex.EncodeToString(testArray)
+		testString, _ := hex.DecodeString(encString)
+		fmt.Println(string(testString))
 
 		localWC := 0;
 		for j, _ := range dictionary {
-        	if(strings.Contains(testString, dictionary[j])) {
+        	if(strings.Contains(string(testString), dictionary[j])) {
         		localWC++
         	}	
 
