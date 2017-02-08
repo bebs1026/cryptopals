@@ -10,8 +10,6 @@ func main() {
 	inputstring := "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
 	inputByteArray, _ := hex.DecodeString(inputstring)
 
-	fmt.Sprintf("%v", inputByteArray)
-
 	dictionary := []string {"the", "be", "to", "of", "and", "a", "in", "that", 
 	"have", "I", "it", "for", "not", "on", "with", "he", 
 	"as", "you", "do", "at", "this", "but", "his", "by", "from"}
@@ -20,10 +18,13 @@ func main() {
 	mostLikelyChar := -1
 
 	for i:=0; i < 16; i++ {
+		
+
 		testArray := make([]byte, len(inputByteArray))
 		copy(testArray, inputByteArray)
 		testArray[0] = testArray[0] ^ byte(i);
 		testString := string(testArray)
+		fmt.Println(testString)
 
 		localWC := 0;
 		for j, _ := range dictionary {
@@ -39,7 +40,7 @@ func main() {
     	}
     }
 
-    fmt.Sprintf("%v", mostLikelyChar)
+    fmt.Println(mostLikelyChar)
 }
 
 
