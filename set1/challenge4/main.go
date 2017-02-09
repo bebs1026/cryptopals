@@ -7,19 +7,12 @@ import (
     "bufio"
     "log"
     "os"
+    "path/filepath"
 )
 
 func main() {
 	
-	//Challenge 3: Determine the random character which was XORd with the inputstring to decode it.
-	
-
 	inputStringArray := readInputStringsFromFile()
-
-	characters := []string {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
-	"k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-	"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
-	"Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"}
 	
 	dictionary := []string {"the", "be", "to", "of", "and", "in", "that", 
 	"have", "it", "for", "not", "on", "with", "he", 
@@ -40,15 +33,15 @@ func main() {
 	for _, inputString := range inputStringArray {
 		
 		inputByteArray, _ := hex.DecodeString(inputString)
-		for _, c := range characters {
+		for i:=0; i<128; i++ {
 
 			testArray := make([]byte, len(inputByteArray))
 			copy(testArray, inputByteArray)
 			
 			for k:=0; k<len(testArray); k++ {
-				testArray[k] = (testArray[k] ^ []byte(c)[0]);
+				testArray[k] = (testArray[k] ^ byte(i));
 			}
-			
+
 			localWC := 0;
 			for j, _ := range dictionary {
 	        	if(strings.Contains(string(testArray), dictionary[j])) {
@@ -57,13 +50,9 @@ func main() {
 
 	    	}
 
-	    	if(localWC > 1) {
-	    		fmt.Println(string(testArray))
-	    	}
-
 	    	if(localWC > highestWC) {
 	    		highestWC = localWC
-	    		mostLikelyChar = c
+	    		mostLikelyChar = string(i)
 	    		decodedString = string(testArray)
 	    	}
 
@@ -78,7 +67,9 @@ func main() {
 func readInputStringsFromFile() []string{
     
 	result := make([]string, 0)
-    file, err := os.Open("/Users/brian/devPersonal/gostuff/bin/file.txt")
+
+    absPath, _ := filepath.Abs("./file.txt")
+    file, err := os.Open(absPath)
     if err != nil {
         log.Fatal(err)
     }
