@@ -59,9 +59,9 @@ func main() {
 	    }
 	}
 
-    fmt.Println(highestWC)
-    fmt.Println(mostLikelyChar)
-   	fmt.Println(decodedString)
+    fmt.Println("Highest word count found is: ", highestWC)
+    fmt.Println("Character used to decrypt via XOR is: ", mostLikelyChar)
+   	fmt.Println("The decoded word is: ", decodedString)
 }
 
 func readInputStringsFromFile() []string{
