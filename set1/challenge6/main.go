@@ -2,13 +2,18 @@ package main
 
 import (
 	"fmt" 
-	"encoding/hex"
+	"bufio"
+    "log"
+    "os"
+    "path/filepath"
 )
 
 func main() {
 	
 	string1 := "this is a test"
 	string2 := "wokka wokka!!!"
+	editDistance := computeEditDistance(string1, string2)
+	fmt.Println("Edit distance is: ", editDistance)
 }
 
 func readInputStringsFromFile() []string{
@@ -44,17 +49,23 @@ func computeEditDistance(str1, str2 string) int {
 	str1Array := []byte(str1)
 	str2Array := []byte(str2)
 
-	for i, e := range str1Array {
-		popCount := 0
-		xorArray := make([]byte, len(str1Array))
-		xorArray = str1Array ^ str2Array
+	for i, _ := range str1Array {
+		xorArray := str1Array[i] ^ str2Array[i]
+		distance = distance + getPopcount(uint8(xorArray))
 	}
 
 	return distance
 }
 
-func getPopcount() int {
+func getPopcount(bite uint8) int {
 	popcount := 0
+	for i:=0; i<=7; i++ {
 
+		//fmt.Println("iterating through popcount with ", i)
+		if( ( (bite >> uint8(i)) & 1) == 1) {
+			popcount++
+			//fmt.Println("just upped popcount")
+		}
+	}
 	return popcount
 }
