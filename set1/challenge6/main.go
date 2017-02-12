@@ -43,7 +43,6 @@ func main() {
 	}
 
 	fmt.Println("Attempting to decode with cipher: ", cipher)
-	//applyMulitCharCipher (cipher, inputByteArray)
 	translatedString := applyMulitCharCipher (cipher, inputByteArray)
 	fmt.Println("Translated string is: ", string(translatedString))
 }
